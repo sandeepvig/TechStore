@@ -96,6 +96,17 @@ public class OrderItem implements Serializable{
 	}
 
 	@Override
+	public boolean equals(Object other) {
+		if(other==null || !(other instanceof OrderItem)) {
+			return false;
+		}
+		
+		OrderItem obj = (OrderItem)other;
+		
+		return this.getOrderID()==obj.getOrderID() && this.getProductID()==obj.getProductID();
+	}
+	
+	@Override
 	public int hashCode() {
 		return (orderID + "-" + productID).hashCode();
 	}
