@@ -10,5 +10,5 @@ import com.svig.techstore.core.vo.Product;
 @Repository
 public interface ProductRepository extends CrudRepository<Product, String>{
 
-	List<Product> findAll();
+//	List<Product> findAll();
 }

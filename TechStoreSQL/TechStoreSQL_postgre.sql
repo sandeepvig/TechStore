@@ -166,3 +166,39 @@ GRANT ALL ON TABLE techstore.orderitem TO techstore_role_rw;
 
 
 
+insert into techstore.product
+(name,description,price,ccy)
+values
+('Iphone 7', 'Apple - Iphone 7', 800, 'SGD');
+
+insert into techstore.product
+(name,description,price,ccy)
+values
+('Iphone 8', 'Apple - Iphone 8', 900, 'SGD');
+
+
+insert into techstore.product
+(name,description,price,ccy)
+values
+('Iphone 9', 'Apple - Iphone 9', 1000, 'SGD');
+
+insert into techstore.product
+(name,description,price,ccy)
+values
+('Iphone 10', 'Apple - Iphone 10', 1150, 'SGD');
+
+insert into techstore.product
+(name,description,price,ccy)
+values
+('Iphone 11', 'Apple - Iphone 11', 1400, 'SGD');
+
+insert into techstore.product
+(name,description,price,ccy)
+values
+('Galaxy S10', 'Samsung - Galaxy S10', 1000, 'SGD');
+
+commit;
+
+
+
+-----------------------------------------------------------------------

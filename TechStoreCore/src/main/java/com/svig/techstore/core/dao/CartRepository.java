@@ -12,11 +12,11 @@ import com.svig.techstore.core.vo.CartItemPK;
 @Repository
 public interface CartRepository extends CrudRepository<CartItem, CartItemPK>{
 
-	public List<CartItem> findAllByUserID(String userID);
+	public List<CartItem> findAllByUserID(int userID);
 	
 	/***
 	 * needs 1.5.1.RELEASE version of spring boot
 	@Modifying
-	public List<CartItem> deleteByUserID(String userID);
+	public List<CartItem> deleteByUserID(int userID);
 	***/
 }

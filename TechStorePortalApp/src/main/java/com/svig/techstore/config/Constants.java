@@ -5,6 +5,7 @@ public interface Constants {
 	public String CURRENT_USER = "CurrentUser";
 	
 	public String ACTION = "Action";
+	public String ACTION_SIGNUP = "Signup";
 	public String ACTION_LOGIN = "Login";
 	public String ACTION_LOGOUT = "Logout";
 	public String ACTION_CART = "Cart";
@@ -20,7 +21,10 @@ public interface Constants {
 	
 	public interface RequestParams{
 		public String USERID = "userid";
+		public String EMAIL = "email";
 		public String PASSWORD = "password";
+		public String FIRSTNAME = "firstName";
+		public String LASTNAME = "lastName";
 		public String PRODUCT_ID = "product_id";
 	}
 }

@@ -73,19 +73,28 @@ public class WelcomeController {
 		return "login"; //this return value is the name of the jsp page that will be invoked
 	}
 
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute(Constants.CURRENT_USER);
+		session.invalidate();
+		
+		return "view";
+	}
+	
 	@RequestMapping(value="/login", method={RequestMethod.GET, RequestMethod.POST})
 	public String login(Model model, HttpServletRequest request, HttpSession session ) {
+
+		session.removeAttribute(Constants.CURRENT_USER);; //logout existing user, if any
 		
 		User currentUser = null;
-		session.removeAttribute(Constants.CURRENT_USER); //logout existing user, if any
 		
-		String userId = request.getParameter(Constants.RequestParams.USERID);
+		String email = request.getParameter(Constants.RequestParams.EMAIL);
 		String password = request.getParameter(Constants.RequestParams.PASSWORD);
 		
-		if(userId!=null && password!=null) {
+		if(email!=null && password!=null) {
 			model.addAttribute(Constants.ACTION, Constants.ACTION_LOGIN);
 			
-			currentUser = userRepo.findByEmailAndPassword(userId, password);
+			currentUser = userRepo.findByEmailAndPassword(email, password);
 			System.out.println("User Found: " + currentUser);
 			session.setAttribute(Constants.CURRENT_USER, currentUser);
 
@@ -97,6 +106,37 @@ public class WelcomeController {
 		}
 		
 		return "view"; //this return value is the name of the jsp page that will be invoked
+	}
+	
+	@Transactional
+	@RequestMapping(value="/signup", method= {RequestMethod.GET, RequestMethod.POST})
+	public String signup(Model model, HttpServletRequest request, HttpSession session) {
+
+		session.removeAttribute(Constants.CURRENT_USER);; //logout existing user, if any
+		
+		String email = request.getParameter(Constants.RequestParams.EMAIL);
+		String password = request.getParameter(Constants.RequestParams.PASSWORD);
+		String firstName = request.getParameter(Constants.RequestParams.FIRSTNAME);
+		String lastName = request.getParameter(Constants.RequestParams.LASTNAME);
+		
+		if(email!=null && password!=null && firstName!=null && lastName!=null) {
+			model.addAttribute(Constants.ACTION, Constants.ACTION_SIGNUP);
+			User user = new User();
+			user.setEmail(email);
+			user.setPassword(password);
+			user.setFname(firstName);
+			user.setLname(lastName);
+			userRepo.save(user);
+			
+			System.out.println("New User Saved (registered): " + user);
+			session.setAttribute(Constants.CURRENT_USER, user);
+			
+			loadUser(model, user);
+			loadCart(model, user);
+			loadProducts(model);
+			return "view";
+		}		
+		return "signup";
 	}
 	
 	@RequestMapping(value="/cart", method={RequestMethod.GET, RequestMethod.POST})
@@ -155,7 +195,7 @@ public class WelcomeController {
 				cartItem.setProductID(productID);
 				cartItem.setQuantity(1);
 				cartRepo.save(cartItem);
-				//cartRepo.findOne(new CartItemPK(currentUser.getEmail(), productID));
+				//cartRepo.findOne(new CartItemPK(currentUser.getUserID(), productID));
 				//cartItem = null;
 			}
 			
@@ -174,7 +214,7 @@ public class WelcomeController {
 		User currentUser = (User)session.getAttribute(Constants.CURRENT_USER);
 		
 		if(currentUser!=null) {
-			Collection<CartItem> cart = cartRepo.findAllByUserID(currentUser.getEmail());
+			Collection<CartItem> cart = cartRepo.findAllByUserID(currentUser.getUserID());
 			Order order = new Order();
 			order.setUserID(currentUser.getUserID());
 			order.setOrderDate(Date.from(Instant.now()));
@@ -196,7 +236,7 @@ public class WelcomeController {
 			orderRepo.save(order);
 			System.out.println("Saved Order: " + order);
 			
-			//cartRepo.deleteByUserID(currentUser.getEmail()); //needs 1.5.1 version of spring boot
+			//cartRepo.deleteByUserID(currentUser.getUserID()); //needs 1.5.1 version of spring boot
 			
 			//loadUser(model, currentUser);
 			//loadCart(model, currentUser);
@@ -214,7 +254,7 @@ public class WelcomeController {
 	private void loadCart(Model model, User user) {
 		if(user!=null) {
 			System.out.println("Loading cart for: " + user);
-			Collection<CartItem> cart = cartRepo.findAllByUserID(user.getEmail());
+			Collection<CartItem> cart = cartRepo.findAllByUserID(user.getUserID());
 			model.addAttribute(Constants.CART, cart);
 			System.out.println("Loaded cart for: " + user + ", " + cart);
 		}
@@ -229,7 +269,7 @@ public class WelcomeController {
 	}
 	
 	private void loadProducts(Model model) {
-		Collection<Product> products = productRepo.findAll();
+		Iterable<Product> products = productRepo.findAll();
 		System.out.println("Products Loaded: " + products);
 		model.addAttribute(Constants.PRODUCTS, products);
 	}
