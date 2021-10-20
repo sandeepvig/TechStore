@@ -164,7 +164,19 @@ GRANT ALL ON TABLE techstore.orderitem TO techstore_role_rw;
 -----------------------------------------------------------------------
 
 
+GRANT ALL ON SEQUENCE techstore.user_userid_seq TO postgres;
 
+GRANT ALL ON SEQUENCE techstore.user_userid_seq TO techstore_role_rw;
+
+GRANT ALL ON SEQUENCE techstore.product_productid_seq TO postgres;
+
+GRANT ALL ON SEQUENCE techstore.product_productid_seq TO techstore_role_rw;
+
+GRANT ALL ON SEQUENCE techstore.order_orderid_seq TO postgres;
+
+GRANT ALL ON SEQUENCE techstore.order_orderid_seq TO techstore_role_rw;
+
+-----------------------------------------------------------------------
 
 insert into techstore.product
 (name,description,price,ccy)
