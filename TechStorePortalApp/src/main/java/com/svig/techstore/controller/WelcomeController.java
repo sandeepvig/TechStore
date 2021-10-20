@@ -84,7 +84,7 @@ public class WelcomeController {
 	@RequestMapping(value="/login", method={RequestMethod.GET, RequestMethod.POST})
 	public String login(Model model, HttpServletRequest request, HttpSession session ) {
 
-		session.removeAttribute(Constants.CURRENT_USER);; //logout existing user, if any
+		session.removeAttribute(Constants.CURRENT_USER); //logout existing user, if any
 		
 		User currentUser = null;
 		
@@ -112,7 +112,7 @@ public class WelcomeController {
 	@RequestMapping(value="/signup", method= {RequestMethod.GET, RequestMethod.POST})
 	public String signup(Model model, HttpServletRequest request, HttpSession session) {
 
-		session.removeAttribute(Constants.CURRENT_USER);; //logout existing user, if any
+		session.removeAttribute(Constants.CURRENT_USER); //logout existing user, if any
 		
 		String email = request.getParameter(Constants.RequestParams.EMAIL);
 		String password = request.getParameter(Constants.RequestParams.PASSWORD);

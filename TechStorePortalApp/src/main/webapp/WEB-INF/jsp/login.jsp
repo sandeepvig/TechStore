@@ -11,7 +11,7 @@
 			<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 			<tr><td></td><td>
 				<table border="0" style="margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto">
-					<tr><td>UserID</td><td><input name="userid" type="text"/></td></tr>
+					<tr><td>UserID</td><td><input name="email" type="text"/></td></tr>
 					<tr><td>Password</td><td><input name="password" type="password"/></td></tr>
 					<tr><td></td><td><table><tr><td><input type="submit" value="Submit"/></td><td><input type="reset" value="Reset"/></td></tr></table></td></tr>		
 					<tr><td>&nbsp;</td><td>&nbsp;</td></tr>		
