@@ -49,7 +49,7 @@ GRANT ALL ON SCHEMA techstore TO techstore_role_rw;
 CREATE TABLE IF NOT EXISTS techstore.user
 (
 	userid serial NOT NULL ,
-    email character(250) NOT NULL,
+    email character(250) NOT NULL UNIQUE,
     fname character(250) NOT NULL,
     lname character(250) NOT NULL,
     password character(250) NOT NULL,

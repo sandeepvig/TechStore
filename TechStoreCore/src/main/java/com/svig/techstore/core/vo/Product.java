@@ -9,7 +9,7 @@ import javax.persistence.Table;
 public class Product{
 
 	@Id
-	private String productID;
+	private int productID;
 	private String name;
 	private String description;
 	private double price;
@@ -18,13 +18,15 @@ public class Product{
 	public Product() {
 	}
 
-	public String getProductID() {
+	public int getProductID() {
 		return productID;
 	}
 
-	public void setProductID(String productID) {
+
+	public void setProductID(int productID) {
 		this.productID = productID;
 	}
+
 
 	public String getName() {
 		return name;
@@ -57,10 +59,19 @@ public class Product{
 	public void setCcy(String ccy) {
 		this.ccy = ccy;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if(other==null || !(other instanceof Product)) {
+			return false;
+		}
+		
+		return this.getProductID()== ((Product)other).getProductID();
+	}
 	
 	@Override
 	public int hashCode() {
-		return productID.hashCode();
+		return Integer.hashCode(productID);
 	}
 	
 	@Override

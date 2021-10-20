@@ -17,10 +17,10 @@ import javax.persistence.Table;
 public class CartItem implements Serializable{
 	
 	@Id
-	private String userID;
+	private int userID;
 	
 	@Id
-	private String productID;
+	private int productID;
 
 	private int quantity;
 	
@@ -34,19 +34,19 @@ public class CartItem implements Serializable{
 	public CartItem() {
 	}
 
-	public String getUserID() {
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
-	public String getProductID() {
+	public int getProductID() {
 		return productID;
 	}
 
-	public void setProductID(String productID) {
+	public void setProductID(int productID) {
 		this.productID = productID;
 	}
 
@@ -67,6 +67,15 @@ public class CartItem implements Serializable{
 		this.product = product;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		if(other==null || !(other instanceof CartItem)) {
+			return false;
+		}
+		
+		CartItem obj = (CartItem)other;
+		return this.getUserID()==obj.getUserID() && this.getProductID()== obj.getProductID();
+	}
 
 	@Override
 	public int hashCode() {

@@ -4,34 +4,34 @@ import java.io.Serializable;
 
 public class CartItemPK implements Serializable{
 
-	private String userID;
+	private int userID;
 	
-	private String productID;
+	private int productID;
 
 	public CartItemPK() {
 	}
 	
-	public CartItemPK(String userID, String productID) {
+	public CartItemPK(int userID, int productID) {
 		this.userID = userID;
 		this.productID = productID;
 	}
 	
-	public String getUserID() {
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
-	public String getProductID() {
+	public int getProductID() {
 		return productID;
 	}
 
-	public void setProductID(String productID) {
+	public void setProductID(int productID) {
 		this.productID = productID;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return (userID + "-" + productID).hashCode();
@@ -43,7 +43,18 @@ public class CartItemPK implements Serializable{
 			return false;
 		}
 		
-		return this.getUserID().equals(((CartItemPK)other).getUserID()) && this.getProductID().equals(((CartItemPK)other).getProductID());
+		CartItemPK obj = (CartItemPK)other;
+		return this.getUserID()==obj.getUserID() && this.getProductID()== obj.getProductID();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer buff = new StringBuffer("CartItemPK[");
+		buff.append("userID: " + userID);
+		buff.append(", productID: " + productID);
+		buff.append("]");
+		
+		return buff.toString();
 	}
 	
 }
