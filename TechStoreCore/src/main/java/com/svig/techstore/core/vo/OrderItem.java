@@ -19,10 +19,10 @@ public class OrderItem implements Serializable{
 	private int orderID;
 	
 	@Id
-	private String productID;
+	private int productID;
 	
 	private int quantity;
-	private double pricePerItem;
+	private double pricePerUnit;
 	private String ccy;
 
 	@ManyToOne
@@ -47,11 +47,11 @@ public class OrderItem implements Serializable{
 		this.orderID = orderID;
 	}
 
-	public String getProductID() {
+	public int getProductID() {
 		return productID;
 	}
 
-	public void setProductID(String productID) {
+	public void setProductID(int productID) {
 		this.productID = productID;
 	}
 
@@ -63,14 +63,14 @@ public class OrderItem implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public double getPricePerItem() {
-		return pricePerItem;
+	public double getPricePerUnit() {
+		return pricePerUnit;
 	}
 
-	public void setPricePerItem(double pricePerItem) {
-		this.pricePerItem = pricePerItem;
+	public void setPricePerUnit(double pricePerUnit) {
+		this.pricePerUnit = pricePerUnit;
 	}
-	
+
 	public String getCcy() {
 		return ccy;
 	}
@@ -103,10 +103,11 @@ public class OrderItem implements Serializable{
 	@Override
 	public String toString() {
 		StringBuffer buff = new StringBuffer("OrderItem[");
-		buff.append("productID: " + productID);
+		buff.append("orderID: " + orderID);
+		buff.append(", productID: " + productID);
 		buff.append(", productName: " + product.getName());
 		buff.append(", quantity: " + quantity);
-		buff.append(", pricePerItem: " + pricePerItem);
+		buff.append(", pricePerUnit: " + pricePerUnit);
 		buff.append(", ccy: " + ccy);
 		buff.append("]");
 		

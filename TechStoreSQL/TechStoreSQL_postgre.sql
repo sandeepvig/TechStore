@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS techstore.orderitem
     orderid integer NOT NULL,
     productid integer NOT NULL,
     quantity integer,
-    price_per_item double precision,
+    price_per_unit double precision,
     ccy character(3) ,
     CONSTRAINT orderitem_pkey PRIMARY KEY (orderid, productid),
     CONSTRAINT orderitem_fk_orderid FOREIGN KEY (orderid)

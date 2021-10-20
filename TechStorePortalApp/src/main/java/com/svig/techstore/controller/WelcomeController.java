@@ -128,8 +128,8 @@ public class WelcomeController {
 		model.addAttribute(Constants.ACTION, Constants.ACTION_REMOVEFROMCART);
 		User currentUser = (User)session.getAttribute(Constants.CURRENT_USER);
 		if(currentUser!=null) {
-			String productID = request.getParameter(Constants.RequestParams.PRODUCT_ID);
-			cartRepo.delete(new CartItemPK(currentUser.getEmail(), productID));
+			int productID = Integer.parseInt(request.getParameter(Constants.RequestParams.PRODUCT_ID));
+			cartRepo.delete(new CartItemPK(currentUser.getUserID(), productID));
 			
 			loadUser(model, currentUser);
 			loadCart(model, currentUser);
@@ -145,13 +145,13 @@ public class WelcomeController {
 
 		User currentUser = (User)session.getAttribute(Constants.CURRENT_USER);
 		if(currentUser!=null) {
-			String productID = request.getParameter(Constants.RequestParams.PRODUCT_ID);
-			CartItem cartItem = cartRepo.findOne(new CartItemPK(currentUser.getEmail(), productID));
+			int productID = Integer.parseInt(request.getParameter(Constants.RequestParams.PRODUCT_ID));
+			CartItem cartItem = cartRepo.findOne(new CartItemPK(currentUser.getUserID(), productID));
 			if(cartItem!=null) {
 				cartItem.setQuantity(cartItem.getQuantity()+1);
 			}else {
 				cartItem = new CartItem();
-				cartItem.setUserID(currentUser.getEmail());
+				cartItem.setUserID(currentUser.getUserID());
 				cartItem.setProductID(productID);
 				cartItem.setQuantity(1);
 				cartRepo.save(cartItem);
@@ -176,7 +176,7 @@ public class WelcomeController {
 		if(currentUser!=null) {
 			Collection<CartItem> cart = cartRepo.findAllByUserID(currentUser.getEmail());
 			Order order = new Order();
-			order.setUserID(currentUser.getEmail());
+			order.setUserID(currentUser.getUserID());
 			order.setOrderDate(Date.from(Instant.now()));
 			order.setOrderTime(Date.from(Instant.now()));
 			order.setStatus(OrderStatus.NEW.toString());
@@ -184,7 +184,7 @@ public class WelcomeController {
 			for (CartItem cartItem : cart) {
 				OrderItem orderItem = new OrderItem();
 				orderItem.setOrder(order);
-				orderItem.setPricePerItem(cartItem.getProduct().getPrice());
+				orderItem.setPricePerUnit(cartItem.getProduct().getPrice());
 				orderItem.setProductID(cartItem.getProductID());
 				//orderItem.setProduct(cartItem.getProduct());
 				orderItem.setQuantity(cartItem.getQuantity());

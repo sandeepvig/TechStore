@@ -1,6 +1,5 @@
 package com.svig.techstore.core.vo;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -8,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,7 +17,7 @@ public class Order {
 	@Id
 	private int orderID;
 	
-	private String userID;
+	private int userID;
 	private String status;
 	
 	@Column(name ="orderdate")
@@ -48,11 +46,12 @@ public class Order {
 		this.orderID = orderID;
 	}
 
-	public String getUserID() {
+
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
@@ -63,7 +62,6 @@ public class Order {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 	
 	public Date getOrderDate() {
 		return orderDate;
@@ -107,8 +105,18 @@ public class Order {
 	}
 
 	@Override
+	public boolean equals(Object other) {
+		if(other==null || !(other instanceof Order)) {
+			return false;
+		}
+		
+		Order obj = (Order)other;
+		return this.getOrderID()==obj.getOrderID();
+	}
+	
+	@Override
 	public int hashCode() {
-		return Integer.valueOf(orderID).hashCode();
+		return Integer.hashCode(orderID);
 	}
 	
 	@Override

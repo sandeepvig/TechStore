@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class OrderItemPK implements Serializable{
 
 	private int orderID;
-	private String productID;
+	private int productID;
 	
 	public OrderItemPK() {
 	}
 
-	public OrderItemPK(int orderID, String productID) {
+	public OrderItemPK(int orderID, int productID) {
 		this.orderID = orderID;
 		this.productID = productID;
 	}
@@ -23,11 +23,11 @@ public class OrderItemPK implements Serializable{
 		this.orderID = orderID;
 	}
 
-	public String getProductID() {
+	public int getProductID() {
 		return productID;
 	}
 
-	public void setProductID(String productID) {
+	public void setProductID(int productID) {
 		this.productID = productID;
 	}
 
@@ -39,7 +39,7 @@ public class OrderItemPK implements Serializable{
 		
 		OrderItemPK obj = (OrderItemPK)other;
 		
-		return this.getOrderID()==obj.getOrderID() && this.getProductID().equals(obj.getProductID());
+		return this.getOrderID()==obj.getOrderID() && this.getProductID()==obj.getProductID();
 	}
 	
 	@Override
