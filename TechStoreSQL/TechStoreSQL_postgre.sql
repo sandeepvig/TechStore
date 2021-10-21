@@ -49,10 +49,10 @@ GRANT ALL ON SCHEMA techstore TO techstore_role_rw;
 CREATE TABLE IF NOT EXISTS techstore.user
 (
 	userid serial NOT NULL ,
-    email character(250) NOT NULL UNIQUE,
-    fname character(250) NOT NULL,
-    lname character(250) NOT NULL,
-    password character(250) NOT NULL,
+    email character varying(250) NOT NULL UNIQUE,
+    fname character varying(250) NOT NULL,
+    lname character varying(250) NOT NULL,
+    password character varying(250) NOT NULL,
     CONSTRAINT user_pk PRIMARY KEY (userid)
 );
 
@@ -70,8 +70,8 @@ GRANT ALL ON TABLE techstore.user TO techstore_role_rw;
 CREATE TABLE IF NOT EXISTS techstore.product
 (
     productid serial NOT NULL,
-    name character(250) NOT NULL,
-    description character(250) NOT NULL,
+    name character varying(250) NOT NULL,
+    description character varying(250) NOT NULL,
     price numeric,
     ccy character(3) NOT NULL,
     CONSTRAINT product_pkey PRIMARY KEY (productid)
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS techstore.order
     userid integer NOT NULL,
     orderdate date,
     ordertime time with time zone,
-    status character(10),
+    status character varying(10),
     expected_delivery_date date,
     actual_delivery_date date,
     CONSTRAINT order_pk PRIMARY KEY (orderid),
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS techstore.orderitem
     productid integer NOT NULL,
     quantity integer,
     price_per_unit double precision,
-    ccy character(3) ,
+    ccy character varying(3) ,
     CONSTRAINT orderitem_pkey PRIMARY KEY (orderid, productid),
     CONSTRAINT orderitem_fk_orderid FOREIGN KEY (orderid)
         REFERENCES techstore.order (orderid),
