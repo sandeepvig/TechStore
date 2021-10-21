@@ -18,6 +18,7 @@ package com.svig.techstore.controller;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -194,14 +195,17 @@ public class WelcomeController {
 				cartItem.setUserID(currentUser.getUserID());
 				cartItem.setProductID(productID);
 				cartItem.setQuantity(1);
-				cartRepo.save(cartItem);
+				cartItem = cartRepo.save(cartItem);
+				
+				
 				//cartRepo.findOne(new CartItemPK(currentUser.getUserID(), productID));
 				//cartItem = null;
 			}
 			
 			loadUser(model, currentUser);
-			loadCart(model, currentUser);
 			loadProducts(model);
+			loadCart(model, currentUser);
+
 		}
 
 		return "view";
@@ -221,15 +225,25 @@ public class WelcomeController {
 			order.setOrderTime(Date.from(Instant.now()));
 			order.setStatus(OrderStatus.NEW.toString());
 			order.setExpectedDeliveryDate(Date.from(Instant.now().plus(3, ChronoUnit.DAYS)));
+			order.setOrderItems(new ArrayList<OrderItem>());
+			
+			order = orderRepo.save(order);
+			
 			for (CartItem cartItem : cart) {
 				OrderItem orderItem = new OrderItem();
+
+				orderItem.setOrderID(order.getOrderID());
 				orderItem.setOrder(order);
 				orderItem.setPricePerUnit(cartItem.getProduct().getPrice());
 				orderItem.setProductID(cartItem.getProductID());
 				//orderItem.setProduct(cartItem.getProduct());
 				orderItem.setQuantity(cartItem.getQuantity());
 				orderItem.setCcy(Currency.SGD.toString());
-				
+				/**
+				 * need to do this when using serial/autoincrement columns.
+				 * after i changed the orderID to autoincrement/serial coulmn, the child table OrderItems wasnt getting saved
+				 */
+				order.getOrderItems().add(orderItem); // 
 				cartRepo.delete(cartItem); //tried writing a deleteByUserID(), that needs a higher version of spring boot
 			}
 			System.out.println("Saving Order: " + order);

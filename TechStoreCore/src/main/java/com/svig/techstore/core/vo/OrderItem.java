@@ -2,6 +2,7 @@ package com.svig.techstore.core.vo;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -32,7 +33,7 @@ public class OrderItem implements Serializable{
 	/**
 	 * note: @OneToOne relationship has to be specified when using @JoinColumn
 	 */
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "productID" , insertable = false, updatable = false)
 	private Product product;
 	
@@ -116,7 +117,7 @@ public class OrderItem implements Serializable{
 		StringBuffer buff = new StringBuffer("OrderItem[");
 		buff.append("orderID: " + orderID);
 		buff.append(", productID: " + productID);
-		buff.append(", productName: " + product.getName());
+		buff.append(", productName: " + (product!=null?product.getName():null));
 		buff.append(", quantity: " + quantity);
 		buff.append(", pricePerUnit: " + pricePerUnit);
 		buff.append(", ccy: " + ccy);

@@ -22,7 +22,7 @@
 						<table style="border: 0" title="Order-${order.orderID}">
 							<tr style="background-color: #D2D1D0"><td>Item&nbsp;&nbsp;&nbsp;&nbsp;</td><td>Quantity&nbsp;&nbsp;&nbsp;&nbsp;</td><td>Price Per Unit&nbsp;&nbsp;&nbsp;&nbsp;</td><td>Net Price&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 							<c:forEach items="${order.orderItems}" var="orderItem">
-								<tr><td>${orderItem.product.name}&nbsp;&nbsp;&nbsp;&nbsp;</td><td>${orderItem.quantity}&nbsp;&nbsp;&nbsp;&nbsp;</td><td>${orderItem.pricePerItem}&nbsp;&nbsp;&nbsp;&nbsp;</td><td>${orderItem.quantity*orderItem.pricePerItem}&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+								<tr><td>${orderItem.product.name}&nbsp;&nbsp;&nbsp;&nbsp;</td><td>${orderItem.quantity}&nbsp;&nbsp;&nbsp;&nbsp;</td><td>${orderItem.pricePerUnit}&nbsp;&nbsp;&nbsp;&nbsp;</td><td>${orderItem.quantity*orderItem.pricePerUnit}&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 							</c:forEach>
 						</table>
 					</td>

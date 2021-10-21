@@ -3,6 +3,7 @@ package com.svig.techstore.core.vo;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ public class Order {
 	/**
 	 * note: for OneToMany relationship to work, the datatype has to be java.util.Collection, java.util.ArrayList does not work
 	 */
-	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER) //note: mappedBy refers to the field on OrderItem.class
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = {CascadeType.ALL}) //note: mappedBy refers to the field on OrderItem.class
 	private Collection<OrderItem> orderItems;
 	
 	public Order() {

@@ -2,6 +2,7 @@ package com.svig.techstore.core.vo;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class CartItem implements Serializable{
 	/**
 	 * note: @OneToOne relationship has to be specified when using @JoinColumn
 	 */
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "productID", insertable = false , updatable = false)
 	private Product product;
 	
