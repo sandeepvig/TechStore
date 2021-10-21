@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.svig.techstore.core.vo.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, String>{
+public interface UserRepository extends CrudRepository<User, Integer>{
 	
 	public User findByEmailAndPassword(String email, String password);
 }

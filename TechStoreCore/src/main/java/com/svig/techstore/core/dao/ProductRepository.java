@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.svig.techstore.core.vo.Product;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, String>{
+public interface ProductRepository extends CrudRepository<Product, Integer>{
 
 //	List<Product> findAll();
 }

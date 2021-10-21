@@ -195,9 +195,17 @@ public class WelcomeController {
 				cartItem.setUserID(currentUser.getUserID());
 				cartItem.setProductID(productID);
 				cartItem.setQuantity(1);
-				cartItem = cartRepo.save(cartItem);
 				
+				/**
+				 * ideally this shouldnt be required
+				 * but the CascadeType.Refresh isnt refreshing the child entity 
+				 * even saveAndFlush() didnt help
+				 * so have to fix the bug by explicitly setting the product entity
+				 */
+				cartItem.setProduct(productRepo.findOne(productID));
+				//cartItem = cartRepo.save(cartItem);
 				
+				cartItem = cartRepo.saveAndFlush(cartItem);
 				//cartRepo.findOne(new CartItemPK(currentUser.getUserID(), productID));
 				//cartItem = null;
 			}
@@ -236,7 +244,15 @@ public class WelcomeController {
 				orderItem.setOrder(order);
 				orderItem.setPricePerUnit(cartItem.getProduct().getPrice());
 				orderItem.setProductID(cartItem.getProductID());
-				//orderItem.setProduct(cartItem.getProduct());
+				
+				/**
+				 * ideally this shouldnt be required
+				 * but the CascadeType.Refresh isnt refreshing the child entity 
+				 * even saveAndFlush() didnt help
+				 * so have to fix the bug by explicitly setting the product entity
+				 */
+				orderItem.setProduct(cartItem.getProduct());
+				
 				orderItem.setQuantity(cartItem.getQuantity());
 				orderItem.setCcy(Currency.SGD.toString());
 				/**
@@ -265,6 +281,7 @@ public class WelcomeController {
 		model.addAttribute(Constants.CURRENT_USER, user);
 	}
 	
+	@Transactional
 	private void loadCart(Model model, User user) {
 		if(user!=null) {
 			System.out.println("Loading cart for: " + user);

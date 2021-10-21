@@ -28,7 +28,7 @@ public class CartItem implements Serializable{
 	/**
 	 * note: @OneToOne relationship has to be specified when using @JoinColumn
 	 */
-	@OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.REFRESH)
+	@OneToOne(fetch = FetchType.LAZY , cascade = {CascadeType.REFRESH})
 	@JoinColumn(name = "productID", insertable = false , updatable = false)
 	private Product product;
 	
